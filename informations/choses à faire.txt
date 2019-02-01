@@ -1,0 +1,51 @@
+Choses randoms à faire :
+
+
+
+Commandes à faire :
+
+argent (give/remove)
+ban
+bingo
+config
+déposer
+emoji
+giveaway
+kick
+levels
+monnaie
+rank
+récupérer
+resetXP
+retenir
+répondre (idmessage)
+serveurinfo
+setGain
+setLevel
+setMoney
+setExp
+staff
+supprimer
+vote
+
+Évents à faire :
+channelCreate
+channelDelete   
+channelUpdate
+editMessage
+emojiCreate
+emojiDelete
+emojiUpdate
+guildBanAdd
+guildBanRemove
+guildMemberAdd
+guildMemberRemove
+guildMemberUpdate
+guildUpdate
+messageDelete
+messageDeleteBulk
+roleCreate
+roleDelete
+roleUpdate
+userUpdate
+voiceStateUpdate

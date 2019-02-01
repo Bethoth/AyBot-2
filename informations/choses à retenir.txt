@@ -1,0 +1,85 @@
+Catégories permissions :
+
+administration
+fun
+informations
+modération
+owner
+utiles
+
+
+
+nouveaux help de Ascor8522 (serv fuze salon dev)
+
+const Discord = require("discord.js");
+const chalk = require("chalk");
+module.exports.run = async (client, message, args) => {
+	//try {
+		
+		let command = args[0];
+		if(!args || args < 1){
+			let arrayCmd = Array.from(client.commands.keys());
+			arrayCmd.sort();
+			helpmsg = "`"+arrayCmd.join("`, `")+"`";
+			message.channel.send(helpmsg);
+		} else 
+		args.splice(0, 1);
+
+		if (aliasExists(command)) {
+			command = findCommand(command);
+		}
+		if (client.commands.has(command)) {
+			let embed = new  Discord.RichEmbed();
+			embed.setAuthor("Aide de la command : "+command.config.name, client.user.displayAvatarURL)
+			embed.setDescription(command.help.description)
+			embed.addField("Utilisation :", command.help.utilisations)
+			if(command.help.exemples.length > 0) embed.addField("Exemples :",command.help.exemples)
+			if(command.config.aliases.length > 0) embed.addField("Alias :", command.config.aliases.join(", "))
+			message.channel.send(embed);
+		} else {
+			message.channel.send("Commande inconnue.");
+		}
+		function aliasExists(command) {
+			for (const key of client.commands.keys()) {
+				if (client.commands.get(key).aliases.includes(command)) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		function findCommand(alias) {
+			for (const key of client.commands.keys()) {
+				if (client.commands.get(key).aliases.includes(alias)) {
+					return key;
+				}
+			}
+		}
+		/*if(client.commands.has(command)) {
+			client.aliases.foreach(alias => {
+				console.log(alias);
+				if(command == alias) {
+					command == alias;
+					return;
+				}
+			});
+			if(client.commands.has(command)) { command = client.commands.get(command); }
+			else { command = client.commands.get(client.aliases.get(command)); }
+
+		}*/
+	/*} catch(e) {
+		var path = require('path');
+		console.log(chalk.red("== ERREUR == \n\nFichier : "+__filename.slice(__dirname.length + 1)+"\n"+e+"\n"));
+	}*/
+}
+module.exports.config = {
+	category: "utile",
+	name: "help",
+	aliases: ["hlp","aide"]
+}
+
+module.exports.help = {
+	description: "Permet d'avoir de l'aide sur une <commande>.",
+	utilisations: `help <commande>`,
+	exemples: `help help`
+}
