@@ -1,34 +1,31 @@
 Choses randoms à faire :
 
-
+Système de sélection de documentation pour la commande docDiscordJS et docJS.
+Système d'autoban/mute/kick au bout de "tant" de sanctions "trucs" personnalisable. 🔧
+Système de musique (choix/boucle/anti-afk etc...).
 
 Commandes à faire :
 
 argent (give/remove)
-ban
 bingo
-config
+config  🔧
 déposer
 emoji
 giveaway
-kick
-levels
 monnaie
-rank
+mute
+niveau
 récupérer
-resetXP
-retenir
-répondre (idmessage)
-serveurinfo
+roleinfo
+setExpérience
 setGain
-setLevel
-setMoney
-setExp
-staff
-supprimer
+setMonnaie
+setNiveau
+tempban
 vote
 
 Évents à faire :
+
 channelCreate
 channelDelete   
 channelUpdate
@@ -38,8 +35,6 @@ emojiDelete
 emojiUpdate
 guildBanAdd
 guildBanRemove
-guildMemberAdd
-guildMemberRemove
 guildMemberUpdate
 guildUpdate
 messageDelete

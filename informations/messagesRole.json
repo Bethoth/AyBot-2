@@ -1,0 +1,29 @@
+{
+	"reactionMessages": [
+		{
+			"channel": "515332315287912460",
+			"message": "545669117773086750",
+			"reactionRoles": []
+		},
+		{
+			"channel": "546713588740521994",
+			"message": "547110981344690177",
+			"reactionRoles": [
+				{
+					"emoji": "🎮",
+					"role": "541685183305351169"
+				}
+			]
+		},
+		{
+			"channel": "546713588740521994",
+			"message": "547110981344690177",
+			"reactionRoles": []
+		},
+		{
+			"channel": "546713588740521994",
+			"message": "547110981344690177",
+			"reactionRoles": []
+		}
+	]
+}

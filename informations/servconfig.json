@@ -1,8 +1,100 @@
 {
-    "515322595063627776":{
-        "prefix":"b?"
-    },
-    "512735679474827275":{
-        "prefix":"b?"
-    }
+	"515322595063627776": {
+		"id": "515322595063627776",
+		"prefix": "b?",
+		"logschannel": "Aucun",
+		"staffchannel": "515330172413542404",
+		"logs": [],
+		"joinchannl": "Aucun",
+		"quitchannel": "Aucun",
+		"joinmessage": "Aucun",
+		"quitmessage": "Aucun",
+		"rolemute": "Aucun",
+		"moneysign": "$",
+		"yesemote": "Aucun",
+		"noemote": "Aucun",
+		"plugins": "Aucun",
+		"autoroles": [
+			"515324597344665632"
+		]
+	},
+	"512735679474827275": {
+		"id": "512735679474827275",
+		"prefix": "b?",
+		"logschannel": "Aucun",
+		"staffchannel": "Aucun",
+		"logs": [],
+		"joinchannl": "Aucun",
+		"quitchannel": "Aucun",
+		"joinmessage": "Aucun",
+		"quitmessage": "Aucun",
+		"rolemute": "Aucun",
+		"moneysign": "$",
+		"yesemote": "Aucun",
+		"noemote": "Aucun",
+		"plugins": "Aucun",
+		"autoroles": [
+			"Aucun"
+		]
+	},
+	"333949691962195969": {
+		"id": "333949691962195969",
+		"prefix": "b?",
+		"logschannel": "Aucun",
+		"staffchannel": "Aucun",
+		"logs": [],
+		"joinchannl": "Aucun",
+		"quitchannel": "Aucun",
+		"sanctionchannel": "Aucun",
+		"joinmessage": "Aucun",
+		"quitmessage": "Aucun",
+		"rolemute": "Aucun",
+		"moneysign": "$",
+		"yesemote": "Aucun",
+		"noemote": "Aucun",
+		"plugins": "Aucun",
+		"autoroles": [
+			"Aucun"
+		]
+	},
+	"264445053596991498": {
+		"id": "264445053596991498",
+		"prefix": "b?",
+		"logschannel": "Aucun",
+		"staffchannel": "Aucun",
+		"logs": [],
+		"joinchannl": "Aucun",
+		"quitchannel": "Aucun",
+		"sanctionchannel": "Aucun",
+		"joinmessage": "Aucun",
+		"quitmessage": "Aucun",
+		"rolemute": "Aucun",
+		"moneysign": "$",
+		"yesemote": "Aucun",
+		"noemote": "Aucun",
+		"plugins": "Aucun",
+		"autoroles": [
+			"Aucun"
+		]
+	},
+	"543832845282443286": {
+		"id": "543832845282443286",
+		"prefix": "b?",
+		"logschannel": "Aucun",
+		"staffchannel": "Aucun",
+		"logs": [],
+		"joinchannl": "Aucun",
+		"quitchannel": "Aucun",
+		"sanctionchannel": "Aucun",
+		"joinmessage": "Aucun",
+		"quitmessage": "Aucun",
+		"rolemute": "Aucun",
+		"moneysign": "$",
+		"yesemote": "Aucun",
+		"noemote": "Aucun",
+		"plugins": "Aucun",
+		"autoroles": [
+			"Aucun"
+		]
+	}
 }
