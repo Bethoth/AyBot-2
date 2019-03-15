@@ -2,23 +2,119 @@ const Discord = require("discord.js");
 const Enmap = require("enmap");
 const fs = require("fs");
 const chalk = require("chalk");
-
+//const Sequelize = require("sequelize");
 const client = new Discord.Client();
+
+/*const sequelize = new Sequelize('database','user','password', {
+	host:'localhost',
+	dialect:'sqlite',
+	logging: false,
+	operatorsAliases : false,
+	storage: './informations/database.sqlite',
+});
+const CurrencyShop = sequelize.import('./functions/CurrencyShop');
+sequelize.import('./functions/Users');
+sequelize.import('./function/UserItems');
+const force = process.argv.includes('--force') || process.argv.includes('-f');
+
+sequelize.sync({ force }).then(async () => {
+	const shop = [];
+	await Promise.all(shop);
+	console.log('Base de donnée synchronisée.');
+	sequelize.close();
+}).catch(chalk.red(console.error));
+
+client.on('guildMemberAdd', (client, member) => {
+	const exp = await Datas.create({
+		name:exp,
+		description: 0,
+		username: member.user.username,
+	});
+});*/
+
 const configBOT = require("./informations/config");
 
 client.login(configBOT.token);
 
-let numberFiles = 0;
-let events;
-let commands;
+let numberFiles = 0, events, commands;
+
+const countLines = function(filePath) {
+    return new Promise((resolve, reject) => {
+        let asciiCode = '\n'.charCodeAt(0); 
+        let count = 0;
+        fs.createReadStream(filePath)
+            .on('error', error => reject(error))
+            .on('data', chunk => {
+                for (let i = 0; i < chunk.length; i++){
+                    if (chunk[i] === asciiCode){
+                        count++;
+                    }
+                }
+            })
+            .on('end', () => resolve(count));
+    });
+};
+
+
+const countLinesDirectory = function(directory) {
+    return new Promise((resolve, reject) => {
+        let promises = [];
+        fs.readdir(directory, (err, files) => {
+            if (err){
+                reject(err); return;
+            }
+ 
+            files.forEach(file => {
+				if(!file.endsWith(".js")) return;
+                promises.push(countLines(directory + file));
+            });
+ 
+            Promise.all(promises).then((arrayCounts) => {
+                return arrayCounts.reduce((accumulator, currentValue) => accumulator + currentValue);
+            }).then((result) => {
+                resolve(result);
+            }).catch((error) => {
+                reject(error);
+            });
+        });
+    });
+};
+ 
+const countLinesDirectories = function(directories) {
+    return new Promise((resolve, reject) => {
+        let promises = [];
+        directories.forEach(directory => {
+            promises.push(countLinesDirectory(directory));
+        });
+ 
+        Promise.all(promises).then((arrayCounts) => {
+            return arrayCounts.reduce((accumulator, currentValue) => accumulator + currentValue);
+        }).then((result) => {
+            resolve(result);
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+};
+
+const directories = ["./functions/", "./events/", "./commands/","./"];
+
+countLinesDirectories(directories).then(function(count){
+	configBOT.linesOfCode = count;
+	fs.writeFile("./informations/config.json", JSON.stringify(configBOT,null, '\t'), (err) => { if (err) console.log(err); })
+}).catch(function(err){
+	console.log(err);
+});
+
 
 fs.readdir("./informations/", (err, files) => {
 	console.log(chalk.red.bold("\n\nLancement du bot.\n\n"));
 	if(err) return console.error(err);
 	files.forEach(file => {
+		if(!file.endsWith(".json")) return;
 		console.log(chalk.white(`Fichier externe : `)+chalk.redBright(`${file}`));
 	});
-	numberFiles+=files.length;
+	numberFiles+=files.length-2;
 });
 fs.readdir("./images/", (err,files) => {
 	if(err) return console.error(err);
@@ -27,7 +123,7 @@ fs.readdir("./images/", (err,files) => {
 	});
 	numberFiles+=files.length;
 });
-fs.readdir("./fonctions/", (err,files) => {
+fs.readdir("./functions/", (err,files) => {
 	if(err) return console.error(err);
 	console.log("");
 	files.forEach(file => {
@@ -46,8 +142,10 @@ fs.readdir("./events/", (err, files) => {
 		let eventName = file.split(".")[0];
 		client.on(eventName, event.bind(null, client));
 		delete require.cache[require.resolve(`./events/${file}`)];
+
 		console.log(chalk.white(`Chargement de l'évènement : `)+chalk.redBright(`${eventName}`));
 	});
+
 	numberFiles+=files.length;
 });
 
@@ -69,7 +167,8 @@ fs.readdir("./commands/", (err, files) => {
 		props.config.aliases.forEach(alias => {
 			client.aliases.set(alias, props.config.name);
 		});
-	
+
+
 		let aliases = props.config.aliases.map(e=>e.toString()).join(", ");
 		console.log(chalk.white(`Chargement de la commande : `)+chalk.redBright(`${commandName}`));
 		console.log(chalk.white(`Raccourcis : `)+chalk.cyan(`${aliases}\n`));
@@ -78,4 +177,3 @@ fs.readdir("./commands/", (err, files) => {
 	numberFiles+=files.length;
 	console.log(chalk.white(`Chargement total de `)+chalk.magenta.bold(`${numberFiles}`)+chalk.white(` fichiers dont ${chalk.magenta.bold(commands)} commandes et ${chalk.magenta.bold(events)} évènements.`));
 });
-

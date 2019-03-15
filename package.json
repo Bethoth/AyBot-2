@@ -9,10 +9,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bufferutil": "^4.0.1",
+    "canvas": "^2.3.1",
     "chalk": "^2.4.2",
+    "count-lines-in-file": "^1.1.0",
     "discord.js": "^11.4.2",
+    "discord.js-docs": "0.0.8",
     "enmap": "^4.6.6",
     "jimp": "^0.6.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "node-opus": "^0.3.1",
+    "request": "^2.88.0",
+    "sequelize": "^4.42.0",
+    "sqlite3": "^4.0.6",
+    "uws": "^100.0.1"
   }
 }
