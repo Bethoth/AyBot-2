@@ -1,40 +1,39 @@
 const chalk = require("chalk");
-module.exports.run = async (client, message, args, err) => {
-	try {
-		if(err) return console.log(err);
-		if(!args || args.size < 1) return message.channel.send("Vous devez mettre une commande à recharger.");
-		let commandNameFind = args[0];
+module.exports.run = async (client, message, args, argsError) => {
+	if(argsError);
+	if(!args || args.length < 1) return await argsError("Vous devez mettre une commande à recharger.");
+	let commandNameFind = args[0];
 
-		if(client.commands.get(client.aliases.has(!commandNameFind))) {
-			return message.channel.send("Cette commande n'a pas été trouvée.");
-		}
+	if(commandNameFind == "all" || commandNameFind == "a") {
+		let nbrcmds = client.commands.size;
+		let count;
+		let arrayCommands = client.commands.array();
+		console.log(chalk.green(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Rechargement de toutes les commandes en cours.\n`));
+		arrayCommands.forEach(commande => {
+			count+=1;
+			
+			let command = commande.config.name;
+			delete require.cache[require.resolve(`./${command}.js`)];
+			client.commands.delete(command);
+			const props = require(`./${command}.js`);
 
-		if(commandNameFind == "all" || commandNameFind == "a") {
-			let nbrcmds = client.commands.size;
-			let count = 0;
-			let arrayCommands = Array.from(client.commands.keys());
-			console.log(chalk.green(`\n${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Rechargement de toutes les commandes en cours.\n`));
-			arrayCommands.forEach(commande => {
-				count+=1;
-				const props = require(`./${commande}.js`);
-				let command = props.config.name;
-				delete require.cache[require.resolve(`./${command}.js`)];
-				client.commands.delete(command);
-				client.commands.set(command, props);
-				console.log(`Rechargement de la commande : ${chalk.redBright(command)}`);
-				process.stdout.write(chalk.green(chalk.reset(`Raccourcis : `)));
-				props.config.aliases.forEach(raccourci => {
-					client.aliases.set(raccourci, props.config.name);
-					process.stdout.write(chalk.cyan(raccourci)+" ");
-				});
-				console.log("\n");
-				if(count >= nbrcmds) return;
+			
+			console.log(`Rechargement de la commande : ${chalk.redBright(command)}`);
+			process.stdout.write(chalk.green(chalk.reset(`Raccourcis : `)));
+			props.config.aliases.forEach(raccourci => {
+				client.aliases.set(raccourci, props.config.name);
+				process.stdout.write(chalk.cyan(raccourci)+" ");
 			});
-			message.channel.send("Toutes les commandes ont été rechargées.");
-			console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Toutes les commandes ont bien été rechargées.`));
-			return false;
-		}
-
+			client.commands.set(command, props);
+			console.log("\n");
+			if(count >= nbrcmds) return;
+		});
+		if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
+		message.channel.send("Toutes les commandes ont été rechargées.");
+		console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Toutes les commandes ont bien été rechargées.`));
+		return false;
+	}
+	try {
 		let commandName;
 		if(client.commands.has(commandNameFind)) {
 			commandName = commandNameFind;
@@ -52,18 +51,21 @@ module.exports.run = async (client, message, args, err) => {
 			});
 
 			client.commands.set(commandName, props);
-			message.channel.send(`La commande ${commandName} a été rechargée.`);
-			console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Rechargement de la commande ${chalk.cyan(commandName)}.`));
-		}
+			if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
+			message.channel.send(`La commande \`${commandName}\` a été rechargée.`);
+			return console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Rechargement de la commande ${chalk.cyan(commandName)}.`));
+		} else console.log("oui");
 	} catch(e) {
-		console.log(chalk.red("== ERREUR == \n\nFichier : "+__filename.slice(__dirname.length + 1)+"\n"+e+"\n"));
-		return message.channel.send("Cette commande n'a pas été trouvée.");
-	}
+		if(e.message == `Cannot read property 'config' of undefined`) {
+			return await argsError("Cette commande n'a pas été trouvée.");
+		}
+		return await argsError("Cette commande a une erreur importante dans son code et a été déchargée à cause de ça. \n**Relancement du bot requis.**"); }
 }
 module.exports.config = {
 	category: "owner",
-	name: "reload",
-	aliases: ["rload","rld","rl"]
+	name: __filename.slice(__dirname.length + 1, __filename.length - 3),
+	aliases: ["rload","rld","rl","rel"],
+	serverForced: false
 }
 
 module.exports.help = {

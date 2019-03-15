@@ -1,35 +1,33 @@
-const { version } = require("discord.js");
 const Discord = require("discord.js");
 const config = require("../informations/config.json");
-const fs = require("fs");
-const chalk = require("chalk");
+const moment = require("moment");
 
 module.exports.run = async (client, message, args) => {
-	try {
-		if(err) return console.log(err);
 
-		let embed = new Discord.RichEmbed();
-		embed.setAuthor(client.user.username,client.user.displayAvatarURL)
-		embed.addField(`Informations :`,`
-		- Créateur : Ayfri#0453
-		- Version : ${config.version}
-		- Date de création : 23/01/2019
-		- Date de mise à jour : ${config.dateVersion}`)
+	let embed = new Discord.RichEmbed();
+	embed.setTitle(`Informations sur le bot :`);
+	embed.setDescription(`
+AyBot 2 est un bot Discord francophonne développé par __Ayfri__. 
+Il a diverses fonctions dont : modération/administration/divers/fun et bien d'autres.
+Il est développé avec __Discord.js__ depuis le 23 février 2019.
+Il est hébergé par __Skariie___.
 
-	embed.addField("Statistiques :",`
-		- Usage de la mémoire : ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} MB
-		- Serveurs : ${client.guilds.size.toLocaleString()}
-		- Discord.js : v${version}`)
-		embed.setColor("#4b5afd")
-		message.channel.send(embed);
-	} catch(e) {
-		console.log(chalk.red("== ERREUR == \n\nFichier : "+__filename.slice(__dirname.length + 1)+"\n"+e+"\n"));
-	}
+	- Bot : ${client.user}
+	- Créateur : ${client.users.get('386893236498857985')}
+	- Préfixe universel : \`${config.prefix}\`
+	- Version : **${config.version}**
+	- [Serveur de support](https://discord.gg/n7HWd4P)
+	- [Inviter le bot](https://discordapp.com/oauth2/authorize?client_id=537534757668651009&scope=bot&permissions=8)
+	- [Site web](https://aybot.tk)`);
+	embed.setColor("#4b5afd");
+	embed.setFooter(`AyBot 2 • `+moment().format('LT'),client.user.displayAvatarURL);
+	message.channel.send(embed);
 }
 module.exports.config = {
 	category: "informations",
-	name: "botinfo",
-	aliases: ["bi","boti","binfo"]
+	name: __filename.slice(__dirname.length + 1, __filename.length - 3),
+	aliases: ["bi","boti","binfo"],
+	serverForced: false
 }
 
 module.exports.help = {
