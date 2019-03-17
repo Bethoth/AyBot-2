@@ -2,6 +2,7 @@ const config = require("../informations/config");
 const servconfig = require("../informations/servconfig");
 const msgRole = require("../informations/messagesRole.json");
 const remindTime = require("../informations/remindTimes.json");
+const userInfos = require("../informations/userdata.json");
 const fs = require("fs");
 const moment = require("moment");
 const chalk = require("chalk");
@@ -10,11 +11,11 @@ const request = require("request");
 module.exports = async (client) => {
 	console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : ${chalk.yellowBright(client.user.tag)} est allumé et présent sur ${chalk.magentaBright(client.guilds.size)} serveurs.`));
 	
-	/*msgRole.reactionMessages.forEach(rm => {
+	msgRole.reactionMessages.forEach(rm => {
 		client.channels.get(rm.channel).fetchMessage(rm.message)
 			.then(m=>m.react("📥").then(mr=>mr.remove()))
 			.catch(err=>{});
-	});*/
+	});
 	client.user.setPresence({
 		status: 'online',
 		game : {
@@ -37,7 +38,7 @@ module.exports = async (client) => {
 		});
 	}
 
-	now = new Date();
+	let now = new Date();
 
 	moment.locale("fr");
 	config.dateVersion = moment().format('L');
@@ -64,7 +65,8 @@ module.exports = async (client) => {
 	console.log(`RAM utilisée : ${chalk.magentaBright((process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2))} `+chalk.blue("MB"))
 	console.log("Utilisation du processeur : "+chalk.magentaBright(os.loadavg()[1])+chalk.blue(" %"));
 	setInterval(function(){
-		now = new Date();
+		fs.writeFile("./informations/userdata backup.json", JSON.stringify(userInfos, null, '\t'), (err) => {if(err) console.log(err)});
+
 		console.log("\nDate : "+chalk.yellow(moment().format('llll')));
 		console.log(`RAM utilisée : ${chalk.magentaBright((process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2))} `+chalk.blue("MB"))
 		console.log("Utilisation du processeur : "+chalk.magentaBright(os.loadavg()[1])+chalk.blue(" %"));
