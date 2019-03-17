@@ -2,7 +2,7 @@
 
 AyBot 2 est un bot Discord francophonne développé par Ayfri. 
 Il a diverses fonctions dont : modération/administration/divers/fun et bien d'autres.
-Il est développé avec Discord.js depuis le 23 février 2019.
+Il est développé avec Discord.js depuis le 23 janvier2019.
 Il est hébergé par Skariie_.
 
 CE BOT EST ENTIÈREMENT EN FRANÇAIS !
