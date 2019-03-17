@@ -36,7 +36,7 @@ const configBOT = require("./informations/config");
 
 client.login(configBOT.token);
 
-let numberFiles = 0, events, commands;
+let numberFiles = 0, events = 0, commands = 0;
 
 const countLines = function(filePath) {
     return new Promise((resolve, reject) => {
@@ -63,13 +63,12 @@ const countLinesDirectory = function(directory) {
             if (err){
                 reject(err); return;
             }
- 
             files.forEach(file => {
 				if(!file.endsWith(".js")) return;
                 promises.push(countLines(directory + file));
             });
  
-            Promise.all(promises).then((arrayCounts) => {
+            Promise.all(promises).then(arrayCounts => {
                 return arrayCounts.reduce((accumulator, currentValue) => accumulator + currentValue);
             }).then((result) => {
                 resolve(result);
@@ -87,7 +86,7 @@ const countLinesDirectories = function(directories) {
             promises.push(countLinesDirectory(directory));
         });
  
-        Promise.all(promises).then((arrayCounts) => {
+        Promise.all(promises).then(arrayCounts => {
             return arrayCounts.reduce((accumulator, currentValue) => accumulator + currentValue);
         }).then((result) => {
             resolve(result);
@@ -98,8 +97,10 @@ const countLinesDirectories = function(directories) {
 };
 
 const directories = ["./functions/", "./events/", "./commands/","./"];
+const dirs = ["./commands/wip","./commands/owner","./commands/administration","./commands/moderation","./commands/information","./commands/utility","./commands/fun"];
 
-countLinesDirectories(directories).then(function(count){
+
+countLinesDirectories(directories).then(count => {
 	configBOT.linesOfCode = count;
 	fs.writeFile("./informations/config.json", JSON.stringify(configBOT,null, '\t'), (err) => { if (err) console.log(err); })
 }).catch(function(err){
@@ -152,28 +153,28 @@ fs.readdir("./events/", (err, files) => {
 client.commands = new Enmap();
 client.aliases = new Enmap();
 
-fs.readdir("./commands/", (err, files) => {
-
-	if(err) return console.error(err);
-	console.log(`\nCommandes : (`+chalk.magenta.bold(`${files.length}`)+")");
-	commands = files.length;
-	if(files.length <= 0) return console.log(chalk.red("== ERREUR ==\n\n Fichier : index.js \nAucun fichiers de commandes n'a été trouvé."));
-	files.forEach(file => {
+dirs.forEach((directory, index) => {
+	fs.readdir(directory, (err, files) => {
+		if(err) return console.error(err);
+		console.log(`\nCommandes : (`+chalk.magenta.bold(`${files.length}`)+")");
+		commands += files.length;
 		
-		if(!file.endsWith("js")) return;
-		let props = require(`./commands/${file}`);
-		let commandName = props.config.name;
-		client.commands.set(commandName, props);
-		props.config.aliases.forEach(alias => {
-			client.aliases.set(alias, props.config.name);
+		files.forEach(file => {
+			
+			if(!file.endsWith("js")) return;
+			let props = require(`${directory}/${file}`);
+			let commandName = props.config.name;
+			client.commands.set(commandName, props);
+			props.config.aliases.forEach(alias => {
+				client.aliases.set(alias, props.config.name);
+			});
+
+
+			let aliases = props.config.aliases.map(e=>e.toString()).join(", ");
+			console.log(chalk.white(`Chargement de la commande : `)+chalk.redBright(`${commandName}`));
+			console.log(chalk.white(`Raccourcis : `)+chalk.cyan(`${aliases}\n`));
 		});
-
-
-		let aliases = props.config.aliases.map(e=>e.toString()).join(", ");
-		console.log(chalk.white(`Chargement de la commande : `)+chalk.redBright(`${commandName}`));
-		console.log(chalk.white(`Raccourcis : `)+chalk.cyan(`${aliases}\n`));
+		numberFiles += files.length;
+		if(index >= dirs.length-1) console.log(chalk.white(`Chargement total de `)+chalk.magenta.bold(`${numberFiles}`)+chalk.white(` fichiers dont ${chalk.magenta.bold(commands)} commandes et ${chalk.magenta.bold(events)} évènements.`));
 	});
-
-	numberFiles+=files.length;
-	console.log(chalk.white(`Chargement total de `)+chalk.magenta.bold(`${numberFiles}`)+chalk.white(` fichiers dont ${chalk.magenta.bold(commands)} commandes et ${chalk.magenta.bold(events)} évènements.`));
 });
