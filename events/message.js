@@ -69,7 +69,7 @@ module.exports = async (client, message, Datas) => {
 				}
 				console.log(`${chalk.greenBright(__filename.slice(__dirname.length + 1))} : ${chalk.yellowBright(message.author.tag)} a fait la commande ${chalk.cyanBright(cmd.config.name)} en privé au bot.`);
 			}
-			return(cmd.run(client, message, args, function(error){
+			return(cmd.run(client, message, args, async function(error){
 				let embed = new Discord.RichEmbed();
 				embed.setAuthor("Erreur sur les arguments : ");
 				embed.setDescription(error);
@@ -77,11 +77,13 @@ module.exports = async (client, message, Datas) => {
 				embed.setColor("#ee2200");
 				embed.setFooter(`AyBot • `+moment().format('LT'),client.user.displayAvatarURL);
 				message.channel.send(embed);
+				//argsError function ^
+
 			}).catch(warning=>{
 				let embed = new Discord.RichEmbed();
 				embed.setDescription("Une erreur a eu lieu avec la commande : **"+cmd.config.name+"**.");
 				embed.addField('Erreur :', warning);
-				embed.setFooter(`AyBot • `+moment().format('LT'),client.user.displayAvatarURL);
+				embed.setFooter(`${client.user.username} • `+moment().format('LT'),client.user.displayAvatarURL);
 				embed.setColor("#dd0000");
 				message.channel.send(embed);
 				console.log(chalk.red(`Une petite erreur a été faite quelque part avec la commande ${chalk.cyanBright(cmd.config.name)}. \nHeure : `+moment().format('LLLL')+
@@ -123,7 +125,7 @@ module.exports = async (client, message, Datas) => {
 				else embed.addField("Commande tappée :","Plus de 512 caractères.");
 				embed.addField("Commande tappée par :",message.author+" "+message.author.id);
 				if(message.guild != null) embed.addField("Salon : ",message.channel.id);
-				embed.setFooter(`AyBot • `+moment().format('LT'),client.user.displayAvatarURL);
+				embed.setFooter(`${client.user.username} • `+moment().format('LT'),client.user.displayAvatarURL);
 				embed.setColor("#dd0000");
 			client.channels.get('544130287894790154').send(embed);
 			message.channel.send("Il semblerait qu'il y ait une erreur avec cette commande."+
