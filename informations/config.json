@@ -1,15 +1,15 @@
 {
 	"token": "hidden",
-	"version": "1.8.4",
-	"dateVersion": "15/03/2019",
+	"version": "1.9.0",
+	"dateVersion": "17/03/2019",
 	"owners": [
 		"386893236498857985",
 		"509726675416645642"
 	],
-	"linesOfCode": 2826,
+	"linesOfCode": 2846,
 	"prefix": "aybot ",
 	"statut": "started",
-	"portWeb": "http://91.162.206.194/botstream/onoff",
+	"portWeb": "hidden",
 	"tokenWeb": "hidden",
 	"cacheChannel": "Aucun",
 	"cacheAction": "Aucune"
