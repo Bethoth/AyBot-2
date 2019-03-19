@@ -1,9 +1,9 @@
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	let args2 = message.content.slice(0).trim().split(/ +/g);
-	if(args < 1) return await argsError("Veuillez mettre un lien de message.");
-	if(!args2[2]) return await argsError("Veuillez mettre du texte.");
+	if(args < 1) return message.channel.send(argsError("Veuillez mettre un [lien de message].", "Erreur sur le premier argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
+	if(!args2[2]) return message.channel.send(argsError("Veuillez mettre du [texte].", "Erreur sur le deuxième argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	
 	const argschnl = message.content.slice(0).trim().split(/\/+/g);
 	const channel = client.channels.get(argschnl[4]);
@@ -22,7 +22,7 @@ module.exports.run = async (client, message, args, argsError) => {
 		embed.setAuthor("Message original de : "+msg.author.tag,msg.author.displayAvatarURL);
 		message.channel.send(embed).then(message.channel.send("**```Réponse de : "+message.author.tag+"```**"+text));
 		if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
-	}).catch(e =>{ argsError("Veuillez mettre un lien de message valable.");});
+	}).catch(e => message.channel.send(argsError("Veuillez mettre un lien de message valable.", "Erreur sur le premier argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3)))));
 }
 module.exports.config = {
 	category: "utiles",

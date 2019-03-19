@@ -1,7 +1,7 @@
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
 const jimp = require("jimp");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	let hexa = ['0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'];
 	let arg1 = args[0];
 	if(arg1 == 'random' || !arg1) {
@@ -73,7 +73,7 @@ module.exports.run = async (client, message, args, argsError) => {
 			return message.channel.send(embed);
 		}
 	} else {
-		await argsError("Veuillez mettre une couleur héxadécimaleo valable ou le nom d'une couleur valable ou `random`.");
+		return message.channel.send(argsError("Veuillez mettre une couleur héxadécimaleo valable ou le nom d'une couleur valable ou `random`.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	}
 }
 module.exports.config = {

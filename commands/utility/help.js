@@ -1,6 +1,7 @@
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
 const moment = require("moment");
-module.exports.run = async (client, message, args, argsError) => {
+module.exports.run = async (client, message, args) => {
 	const dirs = ["wip","owner","administration","moderation","information","utility","fun"];
 
 	if(message.author.id == ('386893236498857985' || '509726675416645642') && message.channel.id == "546713588740521994" || message.author.id == ('386893236498857985' || '509726675416645642') && args[0] == "toutes") categories = ['owner','administration','modération','utiles','informations','fun'];
@@ -94,7 +95,7 @@ module.exports.run = async (client, message, args, argsError) => {
 	}
 	let categoriesForm = ["catégories","categories","categ","cat"];
 	if(command.includes(categoriesForm.some(v => command === v))) {
-		return await argsError("Commande inconnue."); 
+		return message.channel.send(argsError("Cette commande n'existe pas.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	} else {
 		let embed = new Discord.RichEmbed();
 		let categs;

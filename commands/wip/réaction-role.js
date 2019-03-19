@@ -1,8 +1,7 @@
 const fs = require("fs");
 const msgRoles = require("../../informations/messagesRole.json");
 
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	let channel = message.mentions.channels.first();
 	let msgID = args[1];
 	let emoji = args[2] ? args[2] : "Aucun";

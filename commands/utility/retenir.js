@@ -1,12 +1,12 @@
+const argsError = require("../../functions/argsError");
 const fs = require("fs");
 const remindTime = require("../../informations/remindTimes.json");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	function saveRemindTime(){
-		fs.writeFile("./../informations/remindTimes.json", JSON.stringify(remindTime, null, '\t'), (err) => {if(err) console.log(err)}); 
+		fs.writeFile("./informations/remindTimes.json", JSON.stringify(remindTime, null, '\t'), (err) => {if(err) console.log(err)}); 
 	}
 	let times = ["d","j","h","m","s"], timeTotal=0, finalDate = new Date();
-	if(args.length == 0) return await argsError("Veuillez mettre du [texte] à se souvenir.");
+	if(args.length == 0) return message.channel.send(argsError("Veuillez mettre du [texte] à se souvenir.", "3 arguments attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	if(!args[args.length-1].includes(times.some(time => args[args.length-1] === time))) {
 		let time = String(args[args.length-1].trim());
 		args.pop();
@@ -52,10 +52,10 @@ module.exports.run = async (client, message, args, argsError) => {
 			saveRemindTime();
 			return message.channel.send(`Vous serez bien averti de \`${thing}\` dans ${time.slice(-time.length, -1)} secondes.`);
 		} else {
-			return await argsError("Veuillez mettre une période de temps (exemples : 4h/2m/8d).");
+			return message.channel.send(argsError("Veuillez mettre une période de temps valide.\nExemples : 4h/2m/8d", "Erreur sur le troisième argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 		}
 	} else {
-		return await argsError("Veuillez mettre une période de temps (exemples : 4h/2m/8d).");
+		return message.channel.send(argsError("Veuillez mettre une période de temps valide.\nExemples : 4h/2m/8d", "Erreur sur le troisième argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	}
 }
 module.exports.config = {

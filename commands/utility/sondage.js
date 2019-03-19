@@ -1,13 +1,13 @@
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
 const moment = require("moment");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	let text = args.join(" ");
 	let question = "", description = "", emojis = ["one","two","three","four","five","six","seven","eight","nine","ten"];
 	question = "**"+text.slice(1, text.lastIndexOf(']')).toString()+"**\n\n";
-	if(question.length == 0) return await argsError("Veuillez mettre une question.");
+	if(question.length == 0) return message.channel.send(argsError("Veuillez mettre une question.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	choices = text.substring(text.length+2, question.length-3).split(` ; `);
-	if(choices.toString().length == 0) return await argsError("Veuillez mettre au moins 1 choix.");
+	if(choices.toString().length == 0)return message.channel.send(argsError("Veuillez mettre 1 choix.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	choices.forEach((choice,index) => {
 		description+=`:${emojis[index]}: : ${choice}\n`;
 	});

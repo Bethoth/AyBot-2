@@ -19,7 +19,7 @@ module.exports.run = async (client, message, args) => {
 	if(args[0] == "stop") {
 		client.channels.get("547182921300181013").setName("STATUT ALPHA : ÉTEINT");
 		config.statut = "stopped";
-		fs.writeFile("./../informations/config.json", JSON.stringify(config,null, '\t'), (err) => { if (err) console.log(err); })
+		fs.writeFile("./informations/config.json", JSON.stringify(config,null, '\t'), (err) => { if (err) console.log(err); })
 		await message.channel.send("Arrêt du bot en cours.");
 		console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Arrêt du bot en cours.`));
 		client.user.setPresence({
@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args) => {
 	}
 	client.channels.get("547182921300181013").setName("STATUT ALPHA : RELANCEMENT");
 	config.statut = "stopped";
-	fs.writeFile("./../informations/config.json", JSON.stringify(config,null, '\t'), (err) => { if (err) console.log(err); })
+	fs.writeFile("./informations/config.json", JSON.stringify(config,null, '\t'), (err) => { if (err) console.log(err); })
 	await message.channel.send("Relancement du bot en cours.");
 	console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : Relancement du bot en cours.`));
 

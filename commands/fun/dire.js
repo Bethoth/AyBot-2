@@ -1,6 +1,6 @@
 const config = require("../../informations/config.json");
-module.exports.run = async (client, message, args, argsError) => {
-    if(argsError);
+const argsError = require("../../functions/argsError");
+module.exports.run = async (client, message, args) => {
     if(config.owners.includes(message.author.id)) {
         let channelID = args[0];
         let text,channel;
@@ -10,16 +10,16 @@ module.exports.run = async (client, message, args, argsError) => {
             text = text.replace(/@here/gi, "**here**");
             if(text.length > 0) {
 				message.channel.send(text);
-				if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) return message.delete() 
-			} else return await argsError("Veuillez mettre du texte ou l'ID d'un salon disponible au bot.");
+				if(message.guild && message.guild.me.hasPermission('MANAGE_MESSAGES', true)) return message.delete();
+			} else return message.channel.send(argsError("Veuillez mettre du texte.", "1 argument attendus",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
         } else {
             args.splice(0, 1);
             text = args.join(" ");
             channel = client.channels.find(chan => chan.id === channelID);
 			if(text.length > 0) {
-				if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
+				if(message.guild && message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
 				return channel.send(text); 
-			} else return await argsError("Veuillez mettre du texte.");
+			} else return message.channel.send(argsError("Veuillez mettre du texte.", "1 argument attendus",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
         }
     }
 }

@@ -1,7 +1,7 @@
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
-	if(args.length == 0) return await argsError("Veuillez mettre du [texte].")
+module.exports.run = async (client, message, args) => {
+	if(args.length == 0)return message.channel.send(argsError("Veuillez mettre du [texte].", "1 argument attendu.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	let text = args.join(" ");
 	let embed = new Discord.RichEmbed();
 	embed.setAuthor(`${message.author.tag} nous contact pour :`,message.author.displayAvatarURL);

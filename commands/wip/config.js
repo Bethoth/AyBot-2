@@ -2,10 +2,9 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const servconfig = require("../../informations/servconfig.json");
 const moment = require("moment");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	function saveServConfig() {
-		fs.writeFile("./../informations/servconfig.json", JSON.stringify(servconfig, null, '\t'), (err) => {if(err) console.log(err)});
+		fs.writeFile("./informations/servconfig.json", JSON.stringify(servconfig, null, '\t'), (err) => {if(err) console.log(err)});
 	}
 	let guildID = message.guild.id;
 	

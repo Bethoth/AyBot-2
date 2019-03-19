@@ -1,6 +1,6 @@
+const argsError = require("../../functions/argsError");
 const chalk = require("chalk");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	if(!args || args.length < 1) return await argsError("Vous devez mettre une commande à recharger.");
 	let commandNameFind = args[0], props;
 	
@@ -66,7 +66,7 @@ module.exports.run = async (client, message, args, argsError) => {
 		} else console.log("oui");
 	} catch(e) {
 		if(e.message == `Cannot read property 'config' of undefined`) {
-			return await argsError("Cette commande n'a pas été trouvée.");
+			return message.channel.send(argsError("Cette commande n'a pas été trouvée.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 		}
 		console.log(e);
 	}

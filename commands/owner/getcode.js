@@ -1,7 +1,6 @@
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
-
-	if(args.length == 0) return argsError("Veuillez mettre une commande");
+const argsError = require("../../functions/argsError");
+module.exports.run = async (client, message, args) => {
+	if(args.length == 0) return message.channel.send(argsError("Veuillez mettre une commande.", "1 argument attendu.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	let command = args[0];
 	let commandName;
 	if(client.commands.has(command)) commandName = command;
@@ -17,10 +16,9 @@ module.exports.run = async (client, message, args, argsError) => {
 			}
 		} else {
 			message.channel.send(`\`\`\`js\n${commandName.run.toString()}\`\`\``);
-			console.log(commandName);
 		}
 	} else {
-		argsError("Cette commande n'a pas été trouvée.");
+		return message.channel.send(argsError("Cette commande n'a pas été trouvée.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	}
 
 }

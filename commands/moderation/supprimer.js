@@ -1,9 +1,9 @@
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
-	if(args[0]) var nbr = args[0]; else return await argsError("Veuillez préciser un [nombre].");
+const argsError = require("../../functions/argsError");
+module.exports.run = async (client, message, args) => {
+	if(args[0]) var nbr = args[0]; else return message.channel.send(argsError("Veuillez mettre un nombre.", "1 argument attendu.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	let member = "Aucun";
 	++nbr;
-	if(nbr > 100 || nbr < 1) return await argsError("Veuillez mettre un [nombre] entre 1 et 100.");
+	if(nbr > 100 || nbr < 1) return message.channel.send(argsError("Veuillez mettre un nombre entre 1 et 100.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	if(args.size > 1) {
 		if(message.mentions.users.size > 0) member = message.mentions.users.first();
 	}

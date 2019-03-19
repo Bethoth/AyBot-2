@@ -1,5 +1,5 @@
+const argsError = require("../../functions/argsError");
 module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
 	let role = args[0];
 	let guildRoles = message.guild.roles.array();
 	if(role === "tous") {
@@ -12,7 +12,7 @@ module.exports.run = async (client, message, args, argsError) => {
 			for(let roletoFind2 of guildRoles) {
 				if(roletoFind2.name.includes(role)) role = roletoFind2;
 			}
-		} catch(e) { return await argsError("Le rôle n'a pas été trouvé."); }
+		} catch(e) { return message.channel.send(argsError("Le rôle n'a pas été trouvé.", "Erreur sur le premier argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3)))); }
 
 		let membersRole = message.guild.roles.get(roleOf.id).members;
 		membersRole.forEach(member => {
@@ -23,7 +23,7 @@ module.exports.run = async (client, message, args, argsError) => {
 		for(let roletoFind of guildRoles) {
 			if(roletoFind.name.includes(role)) role = roletoFind;
 		}
-	} catch(e) { return await argsError("Le rôle n'a pas été trouvé."); }
+	} catch(e) { return message.channel.send(argsError("Le rôle n'a pas été trouvé.", "Erreur sur le deuxième argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3)))); }
 
 	if(message.guild.roles.has(role.id)) {
 		message.guild.members.forEach(member => {
@@ -31,7 +31,7 @@ module.exports.run = async (client, message, args, argsError) => {
 		});
 		return message.channel.send(`Le rôle \`${role.name}\` a été donné à tout les membres.`);
 	}
-	return await argsError("Le rôle n'a pas été trouvé.");
+	return message.channel.send(argsError("Le rôle n'a pas été trouvé.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 }
 module.exports.config = {
 	category: "administration",

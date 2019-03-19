@@ -1,9 +1,9 @@
 const userdata = require("../../informations/userdata.json");
+const argsError = require("../../functions/argsError");
 const Discord = require("discord.js");
 const fs = require("fs");
 const moment = require("moment");
-module.exports.run = async (client, message, args, argsError) => {
-	if(argsError);
+module.exports.run = async (client, message, args) => {
 	
 	function sortInfracsWithPage(pageNumber, user, embed) {
 		let pageMax = Math.floor(userdata[message.guild.id][user.id].sanctions.length/10)+1;
@@ -32,13 +32,13 @@ module.exports.run = async (client, message, args, argsError) => {
 	embed.setColor("#4b5afd");
 	if(args[0] == "supprimer") {
 		if(!userdata[message.guild.id].hasOwnProperty(person.user.id) || !userdata[message.guild.id][person.user.id].hasOwnProperty('sanctions')) {
-			return await argsError("Cette personne n'a aucunes sanctions.");
+			return message.channel.send(argsError("Cette personne n'a aucune sanctions.", "Erreur sur les arguments.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 		} else {
 			if(args[2] == "toutes") {
 				try { message.guild.unban(person.user.id); } catch(e) {}
 				
 				userdata[message.guild.id][person.user.id].sanctions.splice(0, userdata[message.guild.id][person.user.id].sanctions.length);
-				fs.writeFile("./../informations/userdata.json", JSON.stringify(userdata, null, '\t'), (err) => {if(err) console.log(err)});
+				fs.writeFile("./informations/userdata.json", JSON.stringify(userdata, null, '\t'), (err) => {if(err) console.log(err)});
 				return message.channel.send(`Toutes les sanctions de ${person.user.tag} ont été supprimées.`);
 			} else if(parseInt(args[2])) {
 
@@ -47,14 +47,14 @@ module.exports.run = async (client, message, args, argsError) => {
 						if(sanction.sanction == "ban") message.guild.unban(person.user.id);
 						message.channel.send(`La sanction ${args[2]} a bien été supprimé. (${sanction.sanction})`);
 						userdata[message.guild.id][person.user.id].sanctions.splice(index, 1);
-						return fs.writeFile("./../informations/userdata.json", JSON.stringify(userdata, null, '\t'), (err) => {if(err) console.log(err)});
+						return fs.writeFile("./informations/userdata.json", JSON.stringify(userdata, null, '\t'), (err) => {if(err) console.log(err)});
 					} else {
-						return argsError(`La sanction ${args[2]} n'a pas été trouvée ou n'est pas valide.`);
+						return message.channel.send(argsError(`La sanction ${args[2]} n'a pas été trouvée ou n'est pas valide.`, "Erreur sur le troisième argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 					}
 				});
 
 			} else {
-				return await argsError(`Veuillez mettre \`toutes\` ou le numéro d'une sanction valide.`);
+				return message.channel.send(argsError("Veuillez mettre `toutes` ou le numéro d'une sanction valide.", "3 arguments attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 			}
 		}
 	} else if(args[0] == "modifier") {
@@ -62,12 +62,12 @@ module.exports.run = async (client, message, args, argsError) => {
 				if(userdata[message.guild.id].find()) return console.log("trouvé !");
 			
 		if(!userdata[message.guild.id].hasOwnProperty(person.user.id) || !userdata[message.guild.id][person.user.id].hasOwnProperty('sanctions')) {
-			return await argsError("Cette personne n'a aucunes sanctions.");
+			return message.channel.send(argsError("Cette personne n'a aucune sanctions.", "Erreur sur les arguments.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 		} else if(parseInt(args[2])) {
 
 			userdata[message.guild.id][person.user.id].sanctions.forEach((sanction, index) => {
 				if(args[2] == sanction.case) {
-					if(args.length < 4) return argsError("Veuillez mettre la nouvelle raison de cette sanction.");
+					if(args.length < 4) return message.channel.send(argsError("Veuillez mettre la nouvelle raison de cette sanction.", "4 arguments attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 
 					sanctionFinded = userdata[message.guild.id][person.user.id].sanctions.find(sanction => sanction.case == args[2])
 					sanctionFinded.reason = args[3];
@@ -77,7 +77,7 @@ module.exports.run = async (client, message, args, argsError) => {
 				}
 			});
 		} else {
-			return await argsError(`Veuillez mettre \`toutes\` ou le numéro d'une sanction valide.`);
+			return message.channel.send(argsError("Veuillez mettre `toutes` ou le numéro d'une sanction valide.", "3 arguments attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 		}
 	} else if(args[0] == "voir") {
 		if(!userdata[message.guild.id].hasOwnProperty(person.user.id) || !userdata[message.guild.id][person.user.id].hasOwnProperty('sanctions')) {
@@ -88,7 +88,7 @@ module.exports.run = async (client, message, args, argsError) => {
 		} else {
 			return sortInfracsWithPage(page, person.user, embed);
 		}
-	} else return await argsError("Veuillez mettre `modifier`/`supprimer`/`voir`");
+	} else return message.channel.send(argsError("Veuillez mettre `modifier`/`supprimer`/`voir`.", "Erreur sur le premier argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 
 }
 module.exports.config = {

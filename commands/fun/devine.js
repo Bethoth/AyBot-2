@@ -1,7 +1,7 @@
-module.exports.run = async (client, message, args, argsError) => {
-    if(argsError);
+const argsError = require("../../functions/argsError");
+module.exports.run = async (client, message, args) => {
     let fullText = args.join(" ");
-if(!fullText.includes("?")) return message.channel.send("Une question termine par un `?`.");
+    if(!fullText.includes("?")) return message.channel.send("Une question termine par un `?`.");
 
 let responses = ['bien sur !',
     'je crois oui...',
@@ -33,7 +33,7 @@ let responses = ['bien sur !',
     'faut voir, je pense que ouais mais bon il se pourrait que non :/'+
     'ouais !',
     'non je pense pas.'];
-    if(args.length < 1) { return await argsError("Veuillez mettre une [question].")} else { return message.channel.send(`**${message.author.username}**, ${String(responses[Math.floor(Math.random()*responses.length)])}`); }
+    if(args.length < 1) { return message.channel.send(argsError("Veuillez mettre une [question].","1 argument attendue.", __filename.slice(__dirname.length + 1, __filename.length -3)))} else { return message.channel.send(`**${message.author.username}**, ${String(responses[Math.floor(Math.random()*responses.length)])}`); }
 }
 module.exports.config = {
     category: "fun",
