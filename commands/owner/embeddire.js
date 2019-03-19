@@ -47,14 +47,14 @@ module.exports.help = {
 
 > Les paramètres de l'embed :
 
-**{time}**\`\` met l'heure en bas.
-**e[emojiName]e**\`\` met un émoji.
-**t[titre]t**\`\` met le titre.
-**i[lien]i**\`\` ajoute une image.
-**l[lien]l**\`\` met un logo à gauche.
-**c[couleur]c**\`\` met une couleur.
-**b[texte{lien}]b**\`\` met du texte en base avec une petite image.
-**a[nom{lien}]a**\`\` met un titre avec une petite image.
-**f[nom{valeur}]f**\`\` ajoute une partie.`,
+\`**\`{time}\`**\` met l'heure en bas.\`
+**\`e[emojiName]e\`**\` met un émoji.\`
+**\`t[titre]t\`**\` met le titre.\`
+**\`i[lien]i\`**\` ajoute une image.\`
+**\`l[lien]l\`**\` met un logo à gauche.\`
+**\`c[couleur]c\`**\` met une couleur.\`
+**\`b[texte{lien}]b\`**\` met du texte en base avec une petite image.\`
+**\`a[nom{lien}]a\`**\` met un titre avec une petite image.\`
+**\`f[nom{valeur}]f\`**\` ajoute une partie.`,
 	exemples: `embeddire e[ok_dab]e {time} t[hey]t ça va ?`
 }
