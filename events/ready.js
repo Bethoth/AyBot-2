@@ -1,4 +1,4 @@
-const config = require("../informations/config");
+﻿const config = require("../informations/config");
 const servconfig = require("../informations/servconfig");
 const msgRole = require("../informations/messagesRole.json");
 const remindTime = require("../informations/remindTimes.json");
@@ -11,15 +11,15 @@ const request = require("request");
 module.exports = async (client) => {
 	console.log(chalk.greenBright(`${__filename.slice(__dirname.length + 1)}`)+chalk.reset(` : ${chalk.yellowBright(client.user.tag)} est allumé et présent sur ${chalk.magentaBright(client.guilds.size)} serveurs.`));
 	
-	msgRole.reactionMessages.forEach(rm => {
+	/*msgRole.reactionMessages.forEach(rm => {
 		client.channels.get(rm.channel).fetchMessage(rm.message)
 			.then(m=>m.react("📥").then(mr=>mr.remove()))
 			.catch(err=>{});
-	});
+	});*/
 	client.user.setPresence({
 		status: 'online',
 		game : {
-			name: "v"+config.version+" | b?help",
+			name: "v "+config.version+" | b?help",
 			type: "PLAYING",
 		}
 	});
@@ -38,7 +38,7 @@ module.exports = async (client) => {
 		});
 	}
 
-	let now = new Date();
+	now = new Date();
 
 	moment.locale("fr");
 	config.dateVersion = moment().format('L');
@@ -47,7 +47,7 @@ module.exports = async (client) => {
 			request({method:'post', url: config.portWeb, headers:{"x-Accesstoken": config.tokenWeb, "Content-Type": "application/json"}, form: {'state': 'on'}});
 		}, 30*1000);*/
 
-		client.channels.get("547182921300181013").setName("STATUT ALPHA : EN LIGNE");
+		client.channels.get("515329927763984435").setName("STATUT : EN LIGNE");
 		if(client.channels.has(config.cacheChannel)) client.channels.get(config.cacheChannel).send("Relancement du bot fini."); else {
 			client.users.get(config.cacheChannel).send("Relancement du bot fini.");
 		};
