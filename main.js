@@ -96,7 +96,7 @@ const countLinesDirectories = function(directories) {
     });
 };
 
-const directories = ["./functions/", "./events/", "./commands/","./"];
+const directories = ["./functions/", "./events/","./commands/wip/","./commands/owner/","./commands/administration/","./commands/moderation/","./commands/information/","./commands/utility/","./commands/fun/","./"];
 const dirs = ["./commands/wip","./commands/owner","./commands/administration","./commands/moderation","./commands/information","./commands/utility","./commands/fun"];
 
 
