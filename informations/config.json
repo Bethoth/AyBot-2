@@ -1,12 +1,12 @@
 {
 	"token": "hidden",
-	"version": "1.9.0",
+	"version": "a1.9.2",
 	"dateVersion": "17/03/2019",
 	"owners": [
 		"386893236498857985",
 		"509726675416645642"
 	],
-	"linesOfCode": 2846,
+	"linesOfCode": 3072,
 	"prefix": "aybot ",
 	"statut": "started",
 	"portWeb": "hidden",
