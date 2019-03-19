@@ -3,7 +3,7 @@ const Discord = require("discord.js");
 const moment = require("moment");
 module.exports.run = async (client, message, args) => {
 	let text = args.join(" ");
-	let question = "", description = "", emojis = ["one","two","three","four","five","six","seven","eight","nine","ten"];
+	let question = "", description = "", emojis = ["one","two","three","four","five","six","seven","eight","nine","keycap_ten"];
 	question = "**"+text.slice(1, text.lastIndexOf(']')).toString()+"**\n\n";
 	if(question.length == 0) return message.channel.send(argsError("Veuillez mettre une question.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	choices = text.substring(text.length+2, question.length-3).split(` ; `);
