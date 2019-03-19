@@ -7,7 +7,7 @@ module.exports.run = async (client, message, args) => {
 	question = "**"+text.slice(1, text.lastIndexOf(']')).toString()+"**\n\n";
 	if(question.length == 0) return message.channel.send(argsError("Veuillez mettre une question.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	choices = text.substring(text.length+2, question.length-3).split(` ; `);
-	if(choices.toString().length == 0)return message.channel.send(argsError("Veuillez mettre 1 choix.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
+	if(choices.toString().length == 0) return message.channel.send(argsError("Veuillez mettre 1 choix.", "2 arguments minimum attendus.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	choices.forEach((choice,index) => {
 		description+=`:${emojis[index]}: : ${choice}\n`;
 	});
@@ -17,11 +17,11 @@ module.exports.run = async (client, message, args) => {
 	embed.setDescription(question+description);
 	embed.setFooter(`AyBot 2 • `+moment().format('LT'),client.user.displayAvatarURL);
 	if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete();
-	messageSend = message.channel.send(embed).then(message => {
-		choices.forEach(async (choice,index) => {
-			let emoji = client.guilds.get("512735679474827275").emojis.find(emoji => emoji.name == emojis[index]);
+	messageSend = message.channel.send(embed).then(async message => {
+		for(let i = 0; i < choices.length; i++) {
+			let emoji = client.guilds.get("512735679474827275").emojis.find(emoji => emoji.name == emojis[i]);
 			await message.react(emoji);
-		});
+		}
 	});
 }
 module.exports.config = {
