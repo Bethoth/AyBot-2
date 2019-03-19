@@ -38,6 +38,7 @@ function toEmbed(texte, Guild){
 	let thumb = replaceOne('l[',']l');
 	let footer = replaceOne('b[',']b');
 	let author = replaceOne('a[',']a');
+	let color = replaceOne('c[',']c');
 	replaceAll('e[',']e',function(t1,t2,item){
 		return content.replace(t1+item+t2,
 			`${client.emojis.find(e=>e.name.includes(item))}`
@@ -71,6 +72,9 @@ function toEmbed(texte, Guild){
 	}
 	if(thumb) {
 		embed.setThumbnail(thumb);
+	}
+	if(color) {
+		embed.setColor(color);
 	}
 	if(content) embed.setDescription(content);
 	return embed;
