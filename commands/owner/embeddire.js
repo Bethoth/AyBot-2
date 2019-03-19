@@ -41,19 +41,20 @@ module.exports.config = {
 
 module.exports.help = {
 	description: "**Système fait par Ghom.**\nPermet de faire parler le bot avec un embed qui contient du [texte] et/ou avec différentes options.",
-	utilisations: `- Les [arg] reçoivent un argument textuel
-- Les {key} doivent être écrits comme tels
-- Les [arg{arg}] reçoivent deux arguments
+	utilisations: `- Les [argument] reçoivent un argument textuel.
+- Les {arguments} doivent être écrits comme tels.
+- Les [arguments{arguments}] demandent 2 arguments.
 
-> Les paramètres de l'embed ↓
+> Les paramètres de l'embed :
 
-e[emojiName]e ajoute un emoji
-t[titre]t donne un titre
-i[url]i donne une image
-l[url]l donne un logo
-{time} donne une date
-b[texte{url}]b donne un footer
-a[nom{url}]a donne un auteur
-f[nom{valeur}]f ajoute un field`,
+**{time}** met l'heure en bas.
+**e[emojiName]e** met un émoji.
+**t[titre]t** met le titre.
+**i[lien]i** ajoute une image.
+**l[lien]l** met un logo à gauche.
+**c[couleur]c** met une couleur.
+**b[texte{lien}]b** met du texte en base avec une petite image.
+**a[nom{lien}]a** met un titre avec une petite image.
+**f[nom{valeur}]f** ajoute une partie.`,
 	exemples: `embeddire e[ok_dab]e {time} t[hey]t ça va ?`
 }
