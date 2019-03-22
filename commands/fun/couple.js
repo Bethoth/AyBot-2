@@ -1,6 +1,6 @@
 module.exports.run = async (client, message, args) => {
 	let person1 = args[0] ? args[0] || message.mentions.members.first() : message.member.displayName;
-	let person2 = args[1] ? args[1] || message.mentions.members.array()[1] : message.guild.members.random(1);
+	let person2 = args[1] ? args[1] || message.mentions.members.array()[1] : await message.guild.members.random().displayName;
 	message.channel.send(`**${person1}** a porté son amour sur **${person2}**. :gift_heart:`);
 }	
 module.exports.config = {
