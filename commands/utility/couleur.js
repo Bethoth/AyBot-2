@@ -14,11 +14,11 @@ module.exports.run = async (client, message, args) => {
 		embed.setColor(color);
 		new jimp(256,128, color, (err, image) => {
 			if(err) return console.log(err);
-			image.write('./../images/color.png', (err) => {
+			image.write('./images/color.png', (err) => {
 				if(err) return console.log(err);
 			});
 		});
-		embed.attachFile('./../images/color.png');
+		embed.attachFile('./images/color.png');
 		return message.channel.send(embed);
 	}
 	colors = ['red','yellow','green','blue','purple','black','white','grey','gray','brown',
@@ -43,11 +43,11 @@ module.exports.run = async (client, message, args) => {
 		embed.setColor(color);
 		await new jimp(256,128, color, (err, image) => {
 			if(err) return console.log(err);
-			image.write('./../images/color.png', (err) => {
+			image.write('./images/color.png', (err) => {
 				if(err) return console.log(err);
 			});
 		});
-		embed.attachFile('./../images/color.png');
+		embed.attachFile('./images/color.png');
 		return await message.channel.send(embed);
 	}
 	if(arg1.startsWith("#") && arg1.length == 7) { 
@@ -68,12 +68,12 @@ module.exports.run = async (client, message, args) => {
 					if(err) return console.log(err);
 				});
 			});
-			embed.attachFile('./../images/color.png');
+			embed.attachFile('./images/color.png');
 
 			return message.channel.send(embed);
 		}
 	} else {
-		return message.channel.send(argsError("Veuillez mettre une couleur héxadécimaleo valable ou le nom d'une couleur valable ou `random`.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
+		return message.channel.send(argsError("Veuillez mettre une couleur héxadécimale valable ou le nom d'une couleur valable ou `random`.", "Erreur sur l'argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
 	}
 }
 module.exports.config = {
@@ -85,6 +85,6 @@ module.exports.config = {
 
 module.exports.help = {
 	description: "Permet de générer ou de récupérer une <couleur> héxadécimale.",
-	utilisations: `couleur <couleur>\ncouleur random`,
+	utilisations: `couleur <couleur héxadécimale>\ncouleur random`,
 	exemples: `couleur random\ncolor #4b5afd`
 }
