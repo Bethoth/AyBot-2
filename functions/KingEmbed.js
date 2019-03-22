@@ -80,4 +80,20 @@ function toEmbed(texte, Guild){
 	return embed;
 }
 
-module.exports = toEmbed
+module.exports = toEmbed;
+
+/*
+
+Transform JSON/String into embed with multiple beacons :
+
+{time}              Set a timestamp.
+e[emojiName]e       Add an emoji in the text (with name of emoji).
+t[titre]t           Set the title.
+i[lien]i            Add an image.
+l[lien]l            Set the thumbnail.
+c[couleur]c         Set the color.
+b[texte{lien}]b     Set the footer.
+a[nom{lien}]a       Set the author.
+f[nom{valeur}]f     Add a Field.
+
+*/
