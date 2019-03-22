@@ -61,7 +61,7 @@ module.exports.run = async (client, message, args) => {
 		embed.setAuthor("Aide de la commande : "+commandName.config.name, client.user.displayAvatarURL);
 		embed.setDescription("**RAPPEL** : Les [arguments] sont obligatoires, les <arguments> non.\nPermission : **"+permission+"**\n"+servForced+"**");
 		embed.addField("Description :", commandName.help.description);
-		embed.addField("Syntaxe :", '`'+commandName.help.utilisations+'`');
+		embed.addField("Syntaxe :", `\`${commandName.help.utilisations}\``);
 		if(commandName.help.exemples.length > 0) embed.addField("Exemples :",commandName.help.exemples);
 		if(commandName.config.aliases.length > 0) embed.addField("Alias :", commandName.config.aliases.join(", "));
 		embed.setColor("#4b5afd");
@@ -76,15 +76,19 @@ module.exports.run = async (client, message, args) => {
 		let categ = {'name':cat,'values':[]};
 		arrayCmd.forEach(commande =>
 		{
-			if(message.guild === null) {
-				if(!commande.config.serverForced) {
-					const props = require(`../commands/${commande.config.name}.js`);
-					if(props.config.category == categ.name) categ.values.splice(categ.size, 0, commande.config.name+"`** : "+commande.help.description+`\n`);
-				}
-			} else {
-				const props = require(`../commands/${commande.config.name}.js`);
-				if(props.config.category == categ.name) categ.values.splice(categ.size, 0, commande.config.name+"`** : "+commande.help.description+`\n`);
-			}
+			dirs.forEach(directory => {
+				try {
+					if(message.guild === null) {
+						if(!commande.config.serverForced) {
+							const props = require(`../${directory}/${commande.config.name}.js`);
+							if(props.config.category == categ.name) categ.values.splice(categ.size, 0, commande.config.name+"`** : "+commande.help.description+`\n`);
+						}
+					} else {
+						const props = require(`../${directory}/${commande.config.name}.js`);
+						if(props.config.category == categ.name) categ.values.splice(categ.size, 0, commande.config.name+"`** : "+commande.help.description+`\n`);
+					}
+				} catch(e) {}
+			});
 		});
 		categ.values.sort();
 		let categCmds = "**`"+categ.values.join("**`")+"";
