@@ -1,16 +1,13 @@
 const argsError = require("../../functions/argsError");
+const getThing = require("../../functions/getThing");
 module.exports.run = async (client, message, args) => {
-	let role = args[0];
-	try {
-		let guildRoles = message.guild.roles.array();
-		for(let roletoFind of guildRoles) {
-			if(roletoFind.name.includes(role)) return role = roletoFind.id;
-		}
-		role = message.guild.roles.get(role);
-		if(!role.editable) return message.channel.send(argsError("Le bot n'a pas les permissions pour mentionner ce rôle.", "Erreur de permissions.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
-		if(!role.mentionable) return role.edit({'mentionnable':'true'}).then(message.channel.send(`${role}`).then( role.edit({'mentionnable':'false'}).then(message.delete())));
-		if(role.mentionable) return message.channel.send(`${role}`).then(m=>{if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete()});
-	} catch (e) { return message.channel.send(argsError("Le rôle n'a pas été trouvé.", "Erreur sur un argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));}
+	let role = await getThing("role", message, args.join(" "));
+
+	if(!role) return message.channel.send(argsError("Le rôle n'a pas été trouvé.", "Erreur sur un argument.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
+	if(!role.mentionable && !role.editable) return message.channel.send(argsError("Le bot n'a pas les permissions pour mentionner ce rôle.", "Erreur de permissions.",client.commands.get(__filename.slice(__dirname.length + 1, __filename.length - 3))));
+	
+	if(!role.mentionable) return role.edit({'mentionnable':'true'}).then(message.channel.send(`${role}`).then( role.edit({'mentionnable':'false'}).then(message.delete())));
+	if(role.mentionable) return message.channel.send(`${role}`).then(m => {if(message.guild.me.hasPermission('MANAGE_MESSAGES', true)) message.delete()});
 }
 module.exports.config = {
 	category: "administration",
