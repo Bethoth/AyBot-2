@@ -11,3 +11,7 @@ Il sera plus tard potentiellement disponible en anglais.
 Elle fonctionne grâce à un command handler, le fichier index est chargé au lancement du bot, ensuite il charge chaques évènements puis chaques commandes séparéments.
 
 Cela me permet d'avoir un bon contrôle sur le bot, de pouvoir exports plusieurs modules (comme l'aide, la config etc...) et d'avoir des commandes tel le reload.
+
+
+
+TOUTE COPIE DE CES FICHIERS DANS UN BOT VOUS FERA AJOUTER DANS LA BLACKLIST DU BOT + UNE MAUVAISE RÉPUTATION
